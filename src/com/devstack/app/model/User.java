@@ -20,7 +20,6 @@ public class User {
     private Long id;
 
     @Column(name = "full_name", nullable = false)
-    @ColumnDefault("unknown")
     private String fullName;
 
     @Column(name = "username", nullable = false, unique = true)

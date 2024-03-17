@@ -1,5 +1,6 @@
 package com.devstack.app.controllers;
 
+import com.devstack.app.PasswordUtil;
 import com.devstack.app.db.HibernateUtil;
 import com.devstack.app.model.User;
 import javafx.event.ActionEvent;
@@ -26,17 +27,17 @@ public class RegisterFormController {
                .build();*/
 
         User user = new User();
-                user.setFullName(txtFullName.getText());
-                user.setUsername(txtUsername.getText());
-                user.setPassword(txtPassword.getText());
+        user.setFullName(txtFullName.getText());
+        user.setUsername(txtUsername.getText());
+        user.setPassword(PasswordUtil.hash(txtPassword.getText()));
 
-       try(Session session = HibernateUtil.openSession()){
-           Transaction transaction = session.beginTransaction();
-           session.save(user);
-           transaction.commit();
-       }
+        try (Session session = HibernateUtil.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+        }
 
-       new Alert(Alert.AlertType.INFORMATION, "User was Saved!", ButtonType.CLOSE).show();
+        new Alert(Alert.AlertType.INFORMATION, "User was Saved!", ButtonType.CLOSE).show();
 
     }
 
