@@ -1,5 +1,6 @@
 package com.devstack.app.db;
 
+import com.devstack.app.model.Task;
 import com.devstack.app.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,6 +22,7 @@ public class HibernateUtil {
 
         Metadata metadata = new MetadataSources( standardRegistry )
                 .addAnnotatedClass( User.class )
+                .addAnnotatedClass( Task.class )
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy( ImplicitNamingStrategyJpaCompliantImpl.INSTANCE )
                 .build();
