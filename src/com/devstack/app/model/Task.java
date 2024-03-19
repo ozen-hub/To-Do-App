@@ -18,6 +18,22 @@ public class Task {
     @Column(name = "status", nullable = false, columnDefinition = "TINYINT")
     private boolean status;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Task() {
+    }
+
+    public Task(Long id, String taskName, Date date, boolean status, User user) {
+        this.id = id;
+        this.taskName = taskName;
+        this.date = date;
+        this.status = status;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /*@Getter
 @Setter
@@ -28,14 +29,19 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+
+    @OneToMany(mappedBy = "user")
+    private Set<Task> tasks;
+
     public User() {
     }
 
-    public User(Long id, String fullName, String username, String password) {
+    public User(Long id, String fullName, String username, String password, Set<Task> tasks) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
+        this.tasks = tasks;
     }
 
     public Long getId() {
