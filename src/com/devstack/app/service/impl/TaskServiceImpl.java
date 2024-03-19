@@ -11,11 +11,11 @@ public class TaskServiceImpl implements TaskService {
     private TaskDao taskDao = DaoFactory.getDao(DaoFactory.DaoType.TASK);
 
     @Override
-    public void createTask(TaskDto dto) {
+    public void createTaskWithUser(TaskDto dto, String username) {
         Task task = new Task();
         task.setTaskName(dto.getTaskName());
         task.setDate(dto.getDate());
         task.setStatus(false);
-        taskDao.create(task);
+        taskDao.saveTaskWithUser(task,username);
     }
 }
