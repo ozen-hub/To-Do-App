@@ -1,12 +1,20 @@
 package com.devstack.app.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
+
 public class DashboardFormController {
 
-    String username="";
+    public Label lblUsername;
 
     public void setUsername(String username){
-        this.username=username;
-        System.out.println(this.username);
+        lblUsername.setText(username);
     }
 
+
+    public void btnPastTaskListOnAction(ActionEvent actionEvent) {
+    }
+
+    public void btnAddnewTaskOnAction(ActionEvent actionEvent) {
+    }
 }
