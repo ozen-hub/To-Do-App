@@ -8,6 +8,16 @@ public class TaskDto {
     private Date date;
     private boolean status;
 
+    public TaskDto() {
+    }
+
+    public TaskDto(Long id, String taskName, Date date, boolean status) {
+        this.id = id;
+        this.taskName = taskName;
+        this.date = date;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

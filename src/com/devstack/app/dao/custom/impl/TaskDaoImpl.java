@@ -10,26 +10,39 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.List;
+
 public class TaskDaoImpl implements TaskDao {
     @Override
-    public void create(Task task) {}
+    public void create(Task task) {
+    }
 
     @Override
     public void saveTaskWithUser(Task task, String username) {
-        try(Session session= HibernateUtil.openSession()){
+        try (Session session = HibernateUtil.openSession()) {
             Query<User> query = session.createQuery("FROM User WHERE username=:username", User.class);
-            query.setParameter("username",username);
+            query.setParameter("username", username);
             User user = query.uniqueResult();
-            if (user!=null){
+            if (user != null) {
 
                 task.setUser(user);
                 Transaction transaction = session.beginTransaction();
                 session.save(task);
                 transaction.commit();
 
-            }else{
+            } else {
                 throw new RuntimeException("User Not Found!");
             }
         }
     }
+
+    @Override
+    public List<Task> loadAllTasks(String email) {
+        try (Session session = HibernateUtil.openSession()) {
+            Query<Task> query = session.createQuery("FROM Task", Task.class);
+            return query.list();
+        }
+    }
+
+
 }
