@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public class TaskDaoImpl implements TaskDao {
@@ -60,12 +61,45 @@ public class TaskDaoImpl implements TaskDao {
     public void deleteTaskById(Long id) {
         try (Session session = HibernateUtil.openSession()) {
             Task task = session.find(Task.class, id);
-            if (task==null){
+            if (task == null) {
                 throw new RuntimeException("Not Found!");
             }
 
             Transaction transaction = session.beginTransaction();
             session.delete(task);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public List<Task> loadAllPastTasks(String email) {
+        try (Session session = HibernateUtil.openSession()) {
+
+            Query<User> query1 = session.createQuery("FROM User WHERE username=:username", User.class);
+            query1.setParameter("username", email);
+            User user = query1.uniqueResult();
+
+            if (user == null) {
+                throw new RuntimeException("User Not Found!");
+            }
+
+            Query<Task> query2 = session.createQuery("FROM Task WHERE user_id=:id AND date <=:curDate ORDER BY date ASC", Task.class);
+            query2.setParameter("id", user.getId());
+            query2.setParameter("curDate", new Date());
+            return query2.list();
+        }
+    }
+
+    @Override
+    public void updateTaskStatusById(Long id) {
+        try (Session session = HibernateUtil.openSession()) {
+            Task task = session.find(Task.class, id);
+            if (task == null) {
+                throw new RuntimeException("Not Found!");
+            }
+            task.setStatus(true);
+            Transaction transaction = session.beginTransaction();
+            session.update(task);
             transaction.commit();
         }
     }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="459.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.devstack.app.controllers.PastTaskListFormController">
+<children>
+    <TableView fx:id="tblList" layoutX="4.0" layoutY="3.0" prefHeight="446.0" prefWidth="814.0">
+        <columns>
+            <TableColumn fx:id="colId" prefWidth="75.0" text="#ID" />
+            <TableColumn fx:id="colTask" prefWidth="393.0000305175781" text="Task" />
+            <TableColumn fx:id="collDate" prefWidth="187.99996948242188" text="Date" />
+            <TableColumn fx:id="colStatus" prefWidth="157.0" text="Status" />
+        </columns>
+    </TableView>
+</children>
+</AnchorPane>

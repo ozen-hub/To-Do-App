@@ -73,6 +73,11 @@ public class DashboardFormController {
 
             });
 
+            manageButton.setOnAction(e->{
+                    taskService.updateTaskStatus(d.getId());
+                    loadAll();
+            });
+
             obList.add(tm);
         }
         tblList.setItems(obList);
@@ -84,7 +89,14 @@ public class DashboardFormController {
     }
 
 
-    public void btnPastTaskListOnAction(ActionEvent actionEvent) {
+    public void btnPastTaskListOnAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/PastTaskListForm.fxml"));
+        Parent parent = fxmlLoader.load();
+        PastTaskListFormController formController = fxmlLoader.getController();
+        formController.loadData(lblUsername.getText());
+        Stage stage = new Stage();
+        stage.setScene(new Scene(parent));
+        stage.show();
     }
 
     public void btnAddnewTaskOnAction(ActionEvent actionEvent) throws IOException {

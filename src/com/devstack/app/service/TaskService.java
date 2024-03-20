@@ -9,4 +9,6 @@ public interface TaskService {
     public void createTaskWithUser(TaskDto dto, String username);
     public List<TaskDto> loadAllTasks(String email);
     public void deleteTaskById(Long id);
+    public void updateTaskStatus(Long id);
+    public List<TaskDto> loadAllPastTasks(String email);
 }

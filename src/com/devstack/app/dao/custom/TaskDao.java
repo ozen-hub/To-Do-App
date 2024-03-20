@@ -9,4 +9,7 @@ public interface TaskDao extends CrudDao<Task,Long> {
     public void saveTaskWithUser(Task task, String username);
     public List<Task> loadAllTasks(String email);
     public void deleteTaskById(Long id);
+    public List<Task> loadAllPastTasks(String email);
+
+    void updateTaskStatusById(Long id);
 }

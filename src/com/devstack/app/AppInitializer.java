@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AppInitializer extends Application {
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -19,3 +18,4 @@ public class AppInitializer extends Application {
         primaryStage.show();
     }
 }
+// Maven, => 4 stage, jar | Socket,

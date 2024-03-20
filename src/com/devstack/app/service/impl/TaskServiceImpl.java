@@ -39,4 +39,22 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTaskById(Long id) {
         taskDao.deleteTaskById(id);
     }
+
+    @Override
+    public void updateTaskStatus(Long id) {
+        taskDao.updateTaskStatusById(id);
+    }
+
+    @Override
+    public List<TaskDto> loadAllPastTasks(String email) {
+        List<Task> list = taskDao.loadAllPastTasks(email);
+        List<TaskDto> dtos = new ArrayList<>();
+        list.forEach(e->{
+            dtos.add(
+                    new TaskDto(e.getId(),e.getTaskName(),e.getDate(),e.isStatus())
+            );
+        });
+
+        return dtos;
+    }
 }
