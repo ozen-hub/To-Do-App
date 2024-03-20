@@ -38,9 +38,35 @@ public class TaskDaoImpl implements TaskDao {
 
     @Override
     public List<Task> loadAllTasks(String email) {
+
+
         try (Session session = HibernateUtil.openSession()) {
-            Query<Task> query = session.createQuery("FROM Task", Task.class);
-            return query.list();
+
+            Query<User> query1 = session.createQuery("FROM User WHERE username=:username", User.class);
+            query1.setParameter("username", email);
+            User user = query1.uniqueResult();
+
+            if (user == null) {
+                throw new RuntimeException("User Not Found!");
+            }
+
+            Query<Task> query2 = session.createQuery("FROM Task WHERE user_id=:id ORDER BY date ASC", Task.class);
+            query2.setParameter("id", user.getId());
+            return query2.list();
+        }
+    }
+
+    @Override
+    public void deleteTaskById(Long id) {
+        try (Session session = HibernateUtil.openSession()) {
+            Task task = session.find(Task.class, id);
+            if (task==null){
+                throw new RuntimeException("Not Found!");
+            }
+
+            Transaction transaction = session.beginTransaction();
+            session.delete(task);
+            transaction.commit();
         }
     }
 

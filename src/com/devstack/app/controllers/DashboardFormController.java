@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 public class DashboardFormController {
 
@@ -23,6 +24,7 @@ public class DashboardFormController {
     private final TaskService taskService = ServiceFactory.getService(ServiceFactory.ServiceType.TASK);
 
     public Label lblUsername;
+    private String username;
     public TableView<TaskTm> tblList;
     public TableColumn colId;
     public TableColumn colTask;
@@ -36,15 +38,12 @@ public class DashboardFormController {
         collDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colOptions.setCellValueFactory(new PropertyValueFactory<>("bar"));
-
-        loadAll();
-
     }
 
     private void loadAll() {
         ObservableList<TaskTm> obList =
                 FXCollections.observableArrayList();
-        for (TaskDto d : taskService.loadAllTasks()) {
+        for (TaskDto d : taskService.loadAllTasks(username)) {
             Button deleteButton = new Button("Delete");
             Button manageButton = new Button("Manage");
 
@@ -59,12 +58,28 @@ public class DashboardFormController {
                     buttonBar
             );
 
+            deleteButton.setOnAction(e->{
+                Alert alert = new Alert(
+                        Alert.AlertType.CONFIRMATION,
+                        "Are you sure?",
+                        ButtonType.YES,ButtonType.NO
+                );
+                Optional<ButtonType> buttonType = alert.showAndWait();
+
+                if(buttonType.get()==ButtonType.YES){
+                    taskService.deleteTaskById(d.getId());
+                    loadAll();
+                }
+
+            });
+
             obList.add(tm);
         }
         tblList.setItems(obList);
     }
 
     public void setUsername(String username) {
+        this.username=username;
         lblUsername.setText(username);
     }
 
